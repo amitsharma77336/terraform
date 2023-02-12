@@ -125,4 +125,8 @@ API:
     }
     
 
+Day1:
+    {
 
+        Added first code for provisioning azure resource group.
+    }

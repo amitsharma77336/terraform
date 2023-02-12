@@ -14,6 +14,9 @@ terraform {
   }
 }
 
+provider "random" {
+  
+}
 
 provider "azurerm"{
 
