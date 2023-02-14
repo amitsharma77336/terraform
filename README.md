@@ -130,3 +130,7 @@ Day1:
 
         Added first code for provisioning azure resource group.
     }
+
+
+Update: 
+14.02.2023 : Added .gitignore file to the repository and now it am not publishing the .terraform files and .hcl file.
