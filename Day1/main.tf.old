@@ -6,6 +6,7 @@ terraform {
       source = "hashicorp/azurerm"
       version = "3.43.0"
     }
+// Random provider is to create random string for generating storage accounts    
     random{
       source = "hashicorp/random"
       version = "3.4.3"
