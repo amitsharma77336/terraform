@@ -125,7 +125,7 @@ API:
     }
     
 
-Day1:
+#   Day1:
     {
 
         Added first code for provisioning azure resource group.
@@ -134,3 +134,60 @@ Day1:
 
 Update: 
 14.02.2023 : Added .gitignore file to the repository and now it am not publishing the .terraform files and .hcl file.
+
+
+Day 2:
+
+Terraform core (Create dependency graph, terraform cli to interact with, initialization)
++ 
+Terraform Pluglins (Provider plugin, API calls)
+
+Tools to install for working with Terraform:
+1. Azure CLI Installation.
+2. Terraform Installation: After Installationi set environment variables.
+3. tf.env : It is a tool to manage multiple versions of Terraform.
+
+Can we create terraform registry offline?
+The answer to above question is yes terraform registry could be created offline.
+
+Authentication of Terraform with different platforms:
+
+1. Simple login for example az login.
+2. Login on the basis of Token.
+3. Authentication based on OAuth.
+
+Example of authentication if using client secret:
+
+Code:
+    provider "azurerm"{
+        features{}
+        client_id = "Enter client ID"
+        client_secret = "Enter client secret "
+        subscription_id = "Enter subscription ID"
+        tenant_id = "Enter the tenant ID"
+
+    }
+
+## It is important to note that client secrets should not be checked in to GIT. Fow working with GIT we can use environment variables as terraform automatically quries this.
+
+
+Code:
+    provider "azurerm" {
+        features{}
+
+    }
+In the above code features section is only necessary for azure as this is reserved to try out any of the experimental features in Azure.
+
+# Terraform Commands:
+    1. terraform init:
+            It basically initializes the plugins and download provider files from repository to local.
+            terraform.hcl.tf - This is the file which contains compatibility information and it also contains the has of the terraform plugin whcih is being downloaded.
+            .terraform - It is the directory where all of the files are downloaded.
+    2.  terraform plan:
+            This is the stage when terraform creates API calls and establishes connection to tell you what is going to happen during this terraform deployment.
+            It also creates a .tfstate.lock file which containe __________________________________________________________________
+    Terraform does not care which file is is referring to as long as it has an extension "*.tf".
+
+
+
+
