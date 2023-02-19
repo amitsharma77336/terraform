@@ -188,6 +188,110 @@ In the above code features section is only necessary for azure as this is reserv
             It also creates a .tfstate.lock file which containe __________________________________________________________________
     Terraform does not care which file is is referring to as long as it has an extension "*.tf".
 
+# Day 3:
+
+Terraform is written in GO language and it supports HCL Hashi Corp Configuration Language.
+
+1. Loaded Files:
+    Terraform loads all .tf and .tf.json files in a directory and expects each file to define distinct set of configuration objects.
+2. Dependency Lock File: 
+    It contains the information about the modules external and thr providers and the checksum of downloaded modules from the registry. It compares checksum with module on subsequent terraform init and it can also create or update the .terraform.locl.hcl file.
+    It is located in the same folder as configuration files and tagged as ".terraform.lock.hcl", THere is another folder created called ".terraform" which stores the cached plugins/providers for execution.
+
+###  Syntax: 
+
+Two key Syntax Constructs:
+    1. Arguments:
+        An arguments define a value to a particular name:
+            image_id = "abc123"
+        Here identifier before the equal sign is argument_name and expression after the equal sign is the argument's value.
+    2. Blocks:
+        A block has a type such as 'resource','provider','variable'. Each block defination(Inside documentation) defines how many labels block will assume after the block name.Their can be blocks nested inside blocks.
+        In the example below the resource block type has two labesl names 'aws_instance' and 'example'.
+        Also it has another block inside the block called 'network_interface'. The block body is delimited by { }.
+
+            resource "aws_instance" "example" {
+                ami = "abc123"
+
+                network_interface {
+                    # ...
+                }
+            }
+        ** If in above example network_interface is defined with an equal to sign then it is called a map. We can find this in documentation if we have to use block of map. ** 
+3. Identifiers:
+        Argumen names, block type names, and the names of most Terraform-specific constructs like resources, input variables, etc. are all identifiers.
+
+4. Comments: 
+        Comments in terraform can be written using below syntax:
+            * '#' Represents a single line comment.
+                # This is a single line comment.
+            * '//' Represents a single line comment.
+                // This is again a single line comment.
+            * '/* */' Represents a multi liine comment.
+                /* This is line 1 of multiline comment.
+                This is line 2 of multiline comment. */
+    * Configuration files are UTF-8 encoded. *
+5. JSON Configuration Syntax, It is generally not used because it is cumbersome to use.
+        Example:
+            {
+            "resource": {
+                "aws_instance": {
+                    "example": {
+                        "instance_type": "t2.micro",
+                        "ami": "ami-abc123"
+                    }
+                }
+            }
+            }
+6.  Resource Blocks:
+        A resource block declares a resource of  a given local name, The name is used to refer to this resource from elsewhere in the same terraform module, but has no significance outside that module's scope. 
+
+7.  Expressions:
+        A statement which evaluaes a statement and perform operations on it.
+        It is being executed at the backend
+8.  User defined variables can have '-' in them and for better readability any variable defined by user can have a '-' and terraform arguments,blocks have '_' in their name, Thus it keeps the code clean.
+
+9.  *** Below commands are used in sequece to run and apply and destroy and format terraform ***
+        ```
+        #   terraform init
+        #   terraform validate
+        #   terraform fmt   // This will format the code automatically to keep it clean
+        #   terraform plan
+        #   terraform apply
+        #   terraform destroy
+        ```
+10. Variables:
+        Variables are defined in variables block and below is an example of variable declaration.
+        In terraform variable can be assigned values in 5 ways.
+            variable "resource_group_name"{} - This is declaration of variable.
+            name = var.resource_group_name - This is how we call the variable.
+        Types to call a variable:
+            *    Interactive mode
+            *    Using variable defaults
+            *    Using terraform commandline argument --var
+                    During Runtime value can be defined as --var "foo=bar" --var "foo2=bar"
+            *    Using terraform commandline argument --var-file"
+                    If the file is saved in same directory as name terraform.tfvars then we do not need to use --var-file to explictly call it.
+            *    Using environment variable TF_VAR_<variable_name>
+                    Using environment variable TF_VAR_variable_name, We need to append TF_VAR in the begining of the variable.      
+        Default value of a variable:
+            variable "azure_group_name"{
+                
+                default = "My-RG-1"
+
+            }
+11. Terraform Outputs:
+        Terraform returns output : Which is generally attribute values.
+            ```
+                output "resource_group_id"{
+                    value = azurerm_resource_group.terraform_name.id
+
+                }
+
+                output "vnet-id"{
+                    value = azure_virtual_network.name.id
+                }
+            ```
 
 
 
