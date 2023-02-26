@@ -1,0 +1,10 @@
+This day we will deploy a virtual machine of Linux OS type on Azure.
+
+1. Objective
+    - Create a VM of Linux in Azure.
+    - Use random provider to generate name.
+    - Use locals for tagging and unique VM name.
+
+2. Result:
+    - Completed all objects.
+    - Deployed a virtual machine.

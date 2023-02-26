@@ -201,14 +201,21 @@ Terraform is written in GO language and it supports HCL Hashi Corp Configuration
 ###  Syntax: 
 
 Two key Syntax Constructs:
-    1. Arguments:
-        An arguments define a value to a particular name:
-            image_id = "abc123"
-        Here identifier before the equal sign is argument_name and expression after the equal sign is the argument's value.
-    2. Blocks:
-        A block has a type such as 'resource','provider','variable'. Each block defination(Inside documentation) defines how many labels block will assume after the block name.Their can be blocks nested inside blocks.
-        In the example below the resource block type has two labesl names 'aws_instance' and 'example'.
-        Also it has another block inside the block called 'network_interface'. The block body is delimited by { }.
+
+1. Arguments:
+
+    An arguments define a value to a particular name:
+
+        image_id = "abc123"
+
+    Here identifier before the equal sign is argument_name and expression after the equal sign is the argument's value.
+
+2. Blocks:
+
+    A block has a type such as 'resource','provider','variable'. Each block defination(Inside documentation) defines how many labels block will assume after the block name.Their can be blocks nested inside blocks.
+    In the example below the resource block type has two labesl names 'aws_instance' and 'example'.
+    Also it has another block inside the block called 'network_interface'. The block body is delimited by { }.
+
 
             resource "aws_instance" "example" {
                 ami = "abc123"
@@ -252,16 +259,19 @@ Two key Syntax Constructs:
 8.  User defined variables can have '-' in them and for better readability any variable defined by user can have a '-' and terraform arguments,blocks have '_' in their name, Thus it keeps the code clean.
 
 9.  *** Below commands are used in sequece to run and apply and destroy and format terraform ***
-        ```
+    
+
         #   terraform init
         #   terraform validate
         #   terraform fmt   // This will format the code automatically to keep it clean
         #   terraform plan
         #   terraform apply
         #   terraform destroy
-        ```
+    
 10. Variables:
-        Variables are defined in variables block and below is an example of variable declaration.
+    
+    Variables are defined in variables block and below is an example of variable declaration.
+
         In terraform variable can be assigned values in 5 ways.
             variable "resource_group_name"{} - This is declaration of variable.
             name = var.resource_group_name - This is how we call the variable.
@@ -273,8 +283,10 @@ Two key Syntax Constructs:
             *    Using terraform commandline argument --var-file"
                     If the file is saved in same directory as name terraform.tfvars then we do not need to use --var-file to explictly call it.
             *    Using environment variable TF_VAR_<variable_name>
-                    Using environment variable TF_VAR_variable_name, We need to append TF_VAR in the begining of the variable.      
+                    Using environment variable TF_VAR_variable_name, We need to append TF_VAR in the begining of the variable.
+
         Default value of a variable:
+
             variable "azure_group_name"{
                 
                 default = "My-RG-1"
@@ -282,7 +294,8 @@ Two key Syntax Constructs:
             }
 11. Terraform Outputs:
         Terraform returns output : Which is generally attribute values.
-            ```
+                
+                
                 output "resource_group_id"{
                     value = azurerm_resource_group.terraform_name.id
 
@@ -291,7 +304,45 @@ Two key Syntax Constructs:
                 output "vnet-id"{
                     value = azure_virtual_network.name.id
                 }
-            ```
+                
 
+
+
+# Day 4:
+
+-   Variables: Adding description to variable in variable block . As this will give good representation of code.
+        variable "name"{
+            description = "Name of ther person"
+            default = "amit"
+            type = string
+
+        }
+
+    - There could be various data types in variable.
+        - String
+        - Numeric (contains float and integers)
+        - Boolean
+        - List
+            - List also supports nested lists of map in a list
+                [ 
+                    [1, 2, 3, 4],
+                    {"amit"="name", "surname" = "sharma }
+                ]
+        - Map/Object: Complex map is called object
+            - {
+                "Name" = "Amit",
+                "city" = "Munich"
+                "age" = 31  - ## Since this is an integer type so it becomes an obj
+
+            }
+        - Null
+        - Set: It is a list in which duplicates are not allowed.
+
+## Important you can write your code then break it in to multiple files for better readability.
+
+# Example of some other providers.
+    - Local : This is used to create file locally, May be to output password in a file rather than on screen.
+    - Random - This is used for generating random id,password, number etc.
+## We can have sensitive  = True in outputs.tf output block to stop the output from being displayed on screed if you wish to.
 
 
